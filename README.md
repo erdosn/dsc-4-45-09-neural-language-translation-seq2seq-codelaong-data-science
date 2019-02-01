@@ -218,6 +218,18 @@ Great, the lengths of our vocabularies and total samples are now exactly was nee
 
 
 ```python
+encoder_input_data.shape
+```
+
+
+
+
+    (10000, 16, 69)
+
+
+
+
+```python
 # Create data offset for Teacher forcing model 
 for i, (input_text, target_text) in enumerate(zip(input_texts, target_texts)):
     
@@ -253,6 +265,11 @@ from keras.layers import Input, LSTM, Dense
 latent_dim = 256  # Latent dimensionality of the encoding space.
 ```
 
+    /anaconda3/lib/python3.6/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+      from ._conv import register_converters as _register_converters
+    Using TensorFlow backend.
+
+
 
 ```python
 # Encoder LSTM
@@ -265,6 +282,25 @@ encoder_outputs, state_h, state_c = encoder(encoder_inputs)
 # Discard `encoder_outputs` and only keep the states.
 encoder_states = [state_h, state_c]
 ```
+
+
+```python
+rafa = encoder(encoder_inputs)
+```
+
+
+```python
+rafa
+```
+
+
+
+
+    [<tf.Tensor 'lstm_1_1/TensorArrayReadV3:0' shape=(?, 256) dtype=float32>,
+     <tf.Tensor 'lstm_1_1/while/Exit_2:0' shape=(?, 256) dtype=float32>,
+     <tf.Tensor 'lstm_1_1/while/Exit_3:0' shape=(?, 256) dtype=float32>]
+
+
 
 
 ```python
@@ -310,109 +346,64 @@ model.save('eng-french.h5')
 
     Train on 8000 samples, validate on 2000 samples
     Epoch 1/50
-    8000/8000 [==============================] - 32s 4ms/step - loss: 0.9193 - val_loss: 0.9500
+    8000/8000 [==============================] - 62s 8ms/step - loss: 0.9146 - val_loss: 0.9225
     Epoch 2/50
-    8000/8000 [==============================] - 31s 4ms/step - loss: 0.7296 - val_loss: 0.7711
-    Epoch 3/50
-    8000/8000 [==============================] - 30s 4ms/step - loss: 0.6193 - val_loss: 0.6979
-    Epoch 4/50
-    8000/8000 [==============================] - 30s 4ms/step - loss: 0.5626 - val_loss: 0.6374
-    Epoch 5/50
-    8000/8000 [==============================] - 31s 4ms/step - loss: 0.5210 - val_loss: 0.6019
-    Epoch 6/50
-    8000/8000 [==============================] - 31s 4ms/step - loss: 0.4893 - val_loss: 0.5763
-    Epoch 7/50
-    8000/8000 [==============================] - 28s 4ms/step - loss: 0.4630 - val_loss: 0.5494
-    Epoch 8/50
-    8000/8000 [==============================] - 29s 4ms/step - loss: 0.4416 - val_loss: 0.5355
-    Epoch 9/50
-    8000/8000 [==============================] - 35s 4ms/step - loss: 0.4225 - val_loss: 0.5171
-    Epoch 10/50
-    8000/8000 [==============================] - 28s 4ms/step - loss: 0.4051 - val_loss: 0.5034
-    Epoch 11/50
-    8000/8000 [==============================] - 30s 4ms/step - loss: 0.3888 - val_loss: 0.4942
-    Epoch 12/50
-    8000/8000 [==============================] - 28s 3ms/step - loss: 0.3745 - val_loss: 0.4896
-    Epoch 13/50
-    8000/8000 [==============================] - 27s 3ms/step - loss: 0.3601 - val_loss: 0.4770
-    Epoch 14/50
-    8000/8000 [==============================] - 29s 4ms/step - loss: 0.3471 - val_loss: 0.4703
-    Epoch 15/50
-    8000/8000 [==============================] - 32s 4ms/step - loss: 0.3349 - val_loss: 0.4615
-    Epoch 16/50
-    8000/8000 [==============================] - 31s 4ms/step - loss: 0.3234 - val_loss: 0.4597
-    Epoch 17/50
-    8000/8000 [==============================] - 32s 4ms/step - loss: 0.3123 - val_loss: 0.4562
-    Epoch 18/50
-    8000/8000 [==============================] - 31s 4ms/step - loss: 0.3023 - val_loss: 0.4565
-    Epoch 19/50
-    8000/8000 [==============================] - 33s 4ms/step - loss: 0.2925 - val_loss: 0.4521
-    Epoch 20/50
-    8000/8000 [==============================] - 32s 4ms/step - loss: 0.2828 - val_loss: 0.4495
-    Epoch 21/50
-    8000/8000 [==============================] - 31s 4ms/step - loss: 0.2738 - val_loss: 0.4595
-    Epoch 22/50
-    8000/8000 [==============================] - 32s 4ms/step - loss: 0.2655 - val_loss: 0.4486
-    Epoch 23/50
-    8000/8000 [==============================] - 30s 4ms/step - loss: 0.2569 - val_loss: 0.4505
-    Epoch 24/50
-    8000/8000 [==============================] - 29s 4ms/step - loss: 0.2492 - val_loss: 0.4484
-    Epoch 25/50
-    8000/8000 [==============================] - 29s 4ms/step - loss: 0.2417 - val_loss: 0.4575
-    Epoch 26/50
-    8000/8000 [==============================] - 29s 4ms/step - loss: 0.2343 - val_loss: 0.4576
-    Epoch 27/50
-    8000/8000 [==============================] - 32s 4ms/step - loss: 0.2276 - val_loss: 0.4642
-    Epoch 28/50
-    8000/8000 [==============================] - 31s 4ms/step - loss: 0.2207 - val_loss: 0.4595
-    Epoch 29/50
-    8000/8000 [==============================] - 31s 4ms/step - loss: 0.2145 - val_loss: 0.4677
-    Epoch 30/50
-    8000/8000 [==============================] - 30s 4ms/step - loss: 0.2085 - val_loss: 0.4707
-    Epoch 31/50
-    8000/8000 [==============================] - 32s 4ms/step - loss: 0.2025 - val_loss: 0.4716
-    Epoch 32/50
-    8000/8000 [==============================] - 36s 4ms/step - loss: 0.1964 - val_loss: 0.4761
-    Epoch 33/50
-    8000/8000 [==============================] - 33s 4ms/step - loss: 0.1914 - val_loss: 0.4814
-    Epoch 34/50
-    8000/8000 [==============================] - 29s 4ms/step - loss: 0.1857 - val_loss: 0.4823
-    Epoch 35/50
-    8000/8000 [==============================] - 29s 4ms/step - loss: 0.1811 - val_loss: 0.4893
-    Epoch 36/50
-    8000/8000 [==============================] - 29s 4ms/step - loss: 0.1760 - val_loss: 0.4970
-    Epoch 37/50
-    8000/8000 [==============================] - 29s 4ms/step - loss: 0.1713 - val_loss: 0.5003
-    Epoch 38/50
-    8000/8000 [==============================] - 29s 4ms/step - loss: 0.1670 - val_loss: 0.4970
-    Epoch 39/50
-    8000/8000 [==============================] - 29s 4ms/step - loss: 0.1626 - val_loss: 0.5037
-    Epoch 40/50
-    8000/8000 [==============================] - 29s 4ms/step - loss: 0.1583 - val_loss: 0.5122
-    Epoch 41/50
-    8000/8000 [==============================] - 28s 4ms/step - loss: 0.1546 - val_loss: 0.5110
-    Epoch 42/50
-    8000/8000 [==============================] - 29s 4ms/step - loss: 0.1506 - val_loss: 0.5221
-    Epoch 43/50
-    8000/8000 [==============================] - 29s 4ms/step - loss: 0.1470 - val_loss: 0.5195
-    Epoch 44/50
-    8000/8000 [==============================] - 29s 4ms/step - loss: 0.1435 - val_loss: 0.5261
-    Epoch 45/50
-    8000/8000 [==============================] - 32s 4ms/step - loss: 0.1398 - val_loss: 0.5435
-    Epoch 46/50
-    8000/8000 [==============================] - 31s 4ms/step - loss: 0.1367 - val_loss: 0.5415
-    Epoch 47/50
-    8000/8000 [==============================] - 35s 4ms/step - loss: 0.1335 - val_loss: 0.5468
-    Epoch 48/50
-    8000/8000 [==============================] - 29s 4ms/step - loss: 0.1305 - val_loss: 0.5468
-    Epoch 49/50
-    8000/8000 [==============================] - 31s 4ms/step - loss: 0.1277 - val_loss: 0.5509
-    Epoch 50/50
-    8000/8000 [==============================] - 30s 4ms/step - loss: 0.1247 - val_loss: 0.5536
+     832/8000 [==>...........................] - ETA: 31s - loss: 0.8067
 
 
-    /anaconda3/lib/python3.6/site-packages/keras/engine/network.py:877: UserWarning: Layer lstm_4 was passed non-serializable keyword arguments: {'initial_state': [<tf.Tensor 'lstm_3/while/Exit_2:0' shape=(?, 256) dtype=float32>, <tf.Tensor 'lstm_3/while/Exit_3:0' shape=(?, 256) dtype=float32>]}. They will not be included in the serialized model (and thus will be missing at deserialization time).
-      '. They will not be included '
+    ------------------------------------------------
+
+    KeyboardInterruptTraceback (most recent call last)
+
+    <ipython-input-9-cbdd1436d9ee> in <module>()
+         15           batch_size=batch_size,
+         16           epochs=epochs,
+    ---> 17           validation_split=0.2)
+         18 
+         19 # Save model
+
+
+    /anaconda3/lib/python3.6/site-packages/keras/engine/training.py in fit(self, x, y, batch_size, epochs, verbose, callbacks, validation_split, validation_data, shuffle, class_weight, sample_weight, initial_epoch, steps_per_epoch, validation_steps, **kwargs)
+       1037                                         initial_epoch=initial_epoch,
+       1038                                         steps_per_epoch=steps_per_epoch,
+    -> 1039                                         validation_steps=validation_steps)
+       1040 
+       1041     def evaluate(self, x=None, y=None,
+
+
+    /anaconda3/lib/python3.6/site-packages/keras/engine/training_arrays.py in fit_loop(model, f, ins, out_labels, batch_size, epochs, verbose, callbacks, val_f, val_ins, shuffle, callback_metrics, initial_epoch, steps_per_epoch, validation_steps)
+        197                     ins_batch[i] = ins_batch[i].toarray()
+        198 
+    --> 199                 outs = f(ins_batch)
+        200                 outs = to_list(outs)
+        201                 for l, o in zip(out_labels, outs):
+
+
+    /anaconda3/lib/python3.6/site-packages/keras/backend/tensorflow_backend.py in __call__(self, inputs)
+       2713                 return self._legacy_call(inputs)
+       2714 
+    -> 2715             return self._call(inputs)
+       2716         else:
+       2717             if py_any(is_tensor(x) for x in inputs):
+
+
+    /anaconda3/lib/python3.6/site-packages/keras/backend/tensorflow_backend.py in _call(self, inputs)
+       2673             fetched = self._callable_fn(*array_vals, run_metadata=self.run_metadata)
+       2674         else:
+    -> 2675             fetched = self._callable_fn(*array_vals)
+       2676         return fetched[:len(self.outputs)]
+       2677 
+
+
+    /anaconda3/lib/python3.6/site-packages/tensorflow/python/client/session.py in __call__(self, *args, **kwargs)
+       1437           ret = tf_session.TF_SessionRunCallable(
+       1438               self._session._session, self._handle, args, status,
+    -> 1439               run_metadata_ptr)
+       1440         if run_metadata:
+       1441           proto_data = tf_session.TF_GetBuffer(run_metadata_ptr)
+
+
+    KeyboardInterrupt: 
 
 
 Great, we now have a our trained model which we can use to make inferences for a given input sequence. Let's see how to achieve this. DO notice that our network is overfitting. Ideally, this should be dealt with using cross validation and much larger datasets. We will ignore this for now and move on towards generating some predictions from this trained model. 
